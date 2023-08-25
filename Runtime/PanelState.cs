@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using IEnumerator = System.Collections.IEnumerator;
@@ -8,24 +9,26 @@ namespace ScreensState
     {
         public bool IsShowing => gameObject.activeSelf;
 
-        protected const string SHOW_STATE = "Show";
-        protected const string HIDE_STATE = "Hide";
-        [SerializeField] protected Animator animator;
-        [SerializeField] protected float hideDuration = .1f;
 
         [SerializeField] private Button hideBtn;
+
+        [NonSerialized] protected IPanelAnim panelAnim;
+
+        [NonSerialized] protected float currentHideDuration = .1f;
+
+
+        public virtual IPanelAnim GetPanelAnim() => new AnimatorPanelAnim();
 
         public virtual void Initialize()
         {
             if(hideBtn)
                 hideBtn.onClick.AddListener(HideClicked);
-
-            animator = GetComponent<Animator>();
+            (panelAnim = GetPanelAnim()).Initialize(this);
         }
 
         public virtual void Show()
         {
-            animator.Play(SHOW_STATE);
+            panelAnim.Show();
             gameObject.SetActive(true);
         }
 
@@ -34,13 +37,13 @@ namespace ScreensState
             if (!IsShowing)
                 return;
 
-            animator.Play(HIDE_STATE);
+            currentHideDuration = panelAnim.Hide();
             StartCoroutine(HideAnimation());
         }
 
         private IEnumerator HideAnimation()
         {
-            yield return new WaitForSecondsRealtime(hideDuration);
+            yield return new WaitForSecondsRealtime(currentHideDuration);
             HideForce();
         }
 
