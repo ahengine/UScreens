@@ -2,4 +2,4 @@
  This is a Unity UI Screen Handler, Router 
  
  
- Can using with any UI Framework, Tested with Unity UI, NGUI, Nova UI
+ Works with Unity UI, NGUI, Nova UI
