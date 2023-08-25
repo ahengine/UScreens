@@ -1,0 +1,12 @@
+{
+  "name": "com.ahengine.screenstate",
+  "version": "1.0.0",
+  "displayName": "ScreenState",
+  "description": "ScreenState is minimal ui handler, router based on MVC",
+  "unity": "2021.1",
+  "unityRelease": "0b5",
+  "author": {
+    "name": "Hamidreza Karamian"
+  },
+  "type": "library"
+}
