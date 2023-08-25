@@ -19,6 +19,13 @@ namespace ScreensState
 
         public virtual IPanelAnim GetPanelAnim() => new AnimatorPanelAnim();
 
+        protected virtual void OnValidate() 
+        {
+#if UNITY_EDITOR
+            (panelAnim ??= GetPanelAnim()).Validate(this);
+#endif        
+        }
+
         public virtual void Initialize()
         {
             if(hideBtn)
