@@ -3,21 +3,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using IEnumerator = System.Collections.IEnumerator;
 
-namespace ScreensState
+namespace UScreens
 {
-    public class PanelState : MonoBehaviour
+    public class UPanel : MonoBehaviour
     {
         public bool IsShowing => gameObject.activeSelf;
 
-
         [SerializeField] private Button hideBtn;
 
-        [NonSerialized] protected IPanelAnim panelAnim;
+        [NonSerialized] protected IUPanelAnim panelAnim;
 
         [NonSerialized] protected float currentHideDuration = .1f;
 
 
-        public virtual IPanelAnim GetPanelAnim() => new AnimatorPanelAnim();
+        public virtual IUPanelAnim GetPanelAnim() => new AnimatorPanelAnim();
 
         protected virtual void OnValidate() 
         {

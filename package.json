@@ -1,8 +1,8 @@
 {
-  "name": "com.ahengine.screenstate",
+  "name": "com.ahengine.uscreens",
   "version": "1.0.0",
-  "displayName": "ScreenState",
-  "description": "ScreenState is minimal ui handler, router based on MVC",
+  "displayName": "UScreens",
+  "description": "UScreens is minimal UI Screen handler, router based on MVC",
   "unity": "2021.1",
   "unityRelease": "0b5",
   "author": {

@@ -1,22 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace ScreensState {
+namespace UScreens {
 
     /// <summary>
     /// Interface for handling Panel Animations.
     /// </summary>
-    public interface IPanelAnim 
+    public interface IUPanelAnim 
     {
         /// <summary>
-        /// Validates the system, given the <see cref="PanelState"/> component using it. This is Editor-Only.
+        /// Validates the system, given the <see cref="UPanel"/> component using it. This is Editor-Only.
         /// </summary>
-        public void Validate(PanelState self);
+        public void Validate(UPanel self);
 
         /// <summary>
-        /// Initializes the system, given the <see cref="PanelState"/> component using it.
+        /// Initializes the system, given the <see cref="UPanel"/> component using it.
         /// </summary>
-        public void Initialize(PanelState self);
+        public void Initialize(UPanel self);
 
         /// <summary>
         /// Plays the show animation.
@@ -32,11 +32,11 @@ namespace ScreensState {
     /// <summary>
     /// Panel animation that uses <see cref="Animator"/> to handle the animations.
     /// </summary>
-    public class AnimatorPanelAnim : IPanelAnim 
+    public class AnimatorPanelAnim : IUPanelAnim 
     {
         Animator animator;
 
-        public void Validate(PanelState self)
+        public void Validate(UPanel self)
         {
             if (!self.TryGetComponent(out Animator _))
             {
@@ -47,7 +47,7 @@ namespace ScreensState {
 #endif            
             }
         }
-        public void Initialize(PanelState self) => animator = self.GetComponent<Animator>();
+        public void Initialize(UPanel self) => animator = self.GetComponent<Animator>();
         public float Hide() 
         {
             animator.Play("Hide");

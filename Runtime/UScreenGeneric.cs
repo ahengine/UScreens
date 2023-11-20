@@ -1,12 +1,13 @@
 using UnityEngine;
 
-namespace ScreensState
+namespace UScreens
 {
-    public abstract class ScreenState<TState,TView> : ScreenState where TState : ScreenState where TView : MonoBehaviour
+    public abstract class UScreenGeneric<TState,TView> : UScreen where TState : UScreen where TView : MonoBehaviour
     {
         protected const string VIEWS_ADDRESS_IN_RESOURCE = "";
 
-        private void OnDestroy() => ClearScreen<TState>();
+        private void OnDestroy() => 
+            UScreenRepo.Remove<TState>();
 
         private TView view;
         protected TView View => view ?? InitView();

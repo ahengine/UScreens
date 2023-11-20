@@ -1,16 +1,16 @@
-namespace ScreensState
+namespace UScreens
 {
     public static class RouterBase
     {
-        public static ScreenState Current { private set; get; } = null;
+        public static UScreen Current { private set; get; } = null;
 
-        public static void ChangeState(ScreenState newState)
+        public static void ChangeState(UScreen screen)
         {
-            if(Current == newState)
+            if(Current == screen)
                 return;
 
             if(Current != null) Current.Hide();
-            Current = newState;
+            Current = screen;
             if (Current != null) Current.Show();
         }
     }
