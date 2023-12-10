@@ -3,7 +3,7 @@
  
  Dependencies: {
 
--  UnityUI
--  Animator
+-  UnityUI (com.unity.ugui)
+-  Animator (com.unity.modules.animation)
 
  }
