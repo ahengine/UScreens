@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using IEnumerator = System.Collections.IEnumerator;
 
 namespace UScreens
 {
@@ -11,31 +10,21 @@ namespace UScreens
 
         [SerializeField] private Button hideBtn;
 
-        [NonSerialized] protected IUPanelAnim panelAnim;
-
-        [NonSerialized] protected float currentHideDuration = .1f;
-
-
-        public virtual IUPanelAnim GetPanelAnim() => new AnimatorPanelAnim();
-
-        protected virtual void OnValidate() 
-        {
-#if UNITY_EDITOR
-            (panelAnim ??= GetPanelAnim()).Validate(this);
-#endif        
-        }
+        public event Action OnShow;
+        public event Action OnHide;
 
         public virtual void Initialize()
         {
-            if(hideBtn)
-                hideBtn.onClick.AddListener(HideClicked);
-            (panelAnim = GetPanelAnim()).Initialize(this);
+            if (hideBtn)
+                hideBtn.onClick.AddListener(Hide);
         }
 
         public virtual void Show()
         {
-            panelAnim.Show();
-            gameObject.SetActive(true);
+            if (IsShowing)
+                return;
+
+            OnShow?.Invoke();
         }
 
         public virtual void Hide()
@@ -43,20 +32,7 @@ namespace UScreens
             if (!IsShowing)
                 return;
 
-            currentHideDuration = panelAnim.Hide();
-            StartCoroutine(HideAnimation());
+            OnHide?.Invoke();
         }
-
-        private IEnumerator HideAnimation()
-        {
-            yield return new WaitForSecondsRealtime(currentHideDuration);
-            HideForce();
-        }
-
-        public virtual void HideForce() =>
-            gameObject.SetActive(false);
-
-        protected virtual void HideClicked() =>
-            Hide();
     }
 }
