@@ -1,12 +1,13 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UScreens
 {
-    public abstract class UScreenGeneric<TState,TView> : UScreen where TState : UScreen where TView : MonoBehaviour
+    public abstract class UScreenGeneric<TState, TView> : UScreen where TState : UScreen where TView : MonoBehaviour
     {
         protected const string VIEWS_ADDRESS_IN_RESOURCE = "";
 
-        private void OnDestroy() => 
+        private void OnDestroy() =>
             UScreenRepo.Remove<TState>();
 
         private TView view;
@@ -16,6 +17,14 @@ namespace UScreens
         {
             view = Instantiate(Resources.Load<GameObject>(ViewAddress), transform).GetComponent<TView>();
             InitializeView();
+
+            if (FindObjectOfType<EventSystem>() == null)
+            {
+                var EventSystem = new GameObject("EventSystem");
+                EventSystem.AddComponent<EventSystem>();
+                EventSystem.AddComponent<StandaloneInputModule>();
+            }
+
             return view;
         }
 
