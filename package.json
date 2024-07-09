@@ -8,5 +8,8 @@
   "author": {
     "name": "Hamidreza Karamian"
   },
-  "type": "library"
+  "type": "library",
+  "dependencies": {
+    "com.cysharp.unitask": "2.5.5"
+  }
 }

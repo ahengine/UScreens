@@ -1,5 +1,5 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace UScreens
 {
@@ -11,19 +11,51 @@ namespace UScreens
             UScreenRepo.Remove<TState>();
 
         private TView view;
-        protected TView View => view ?? InitView();
+
+        protected TView View
+        {
+            get
+            {
+                TryCreateView();
+                return view;
+            }
+        }
+
+        public sealed override void TryCreateView()
+        {
+            if (view == null)
+                view = InitView();
+        }
+
+        public sealed override async UniTask TryCreateViewAsync()
+        {
+            if (view == null)
+                view = await InitViewAsync();
+        }
 
         private TView InitView()
         {
             view = Instantiate(Resources.Load<GameObject>(ViewAddress), transform).GetComponent<TView>();
             InitializeView();
+            return view;
+        }
 
-            if (FindObjectOfType<EventSystem>() == null)
+        private async UniTask<TView> InitViewAsync()
+        {
+            view = await UniLoad.LoadAndInstantiate<TView>(ViewAddress);
+
+            view.transform.SetParent(transform);
+            await UniTask.Yield();
+
+            // Activate gameObject after reparenting
+            if (!view.gameObject.activeInHierarchy)
             {
-                var EventSystem = new GameObject("EventSystem");
-                EventSystem.AddComponent<EventSystem>();
-                EventSystem.AddComponent<StandaloneInputModule>();
+                view.gameObject.SetActive(true);
+                await UniTask.Yield();
             }
+
+            InitializeView();
+            await UniTask.Yield();
 
             return view;
         }
