@@ -37,6 +37,7 @@ namespace UScreens
         {
             view = Instantiate(Resources.Load<GameObject>(ViewAddress), transform).GetComponent<TView>();
             InitializeView();
+
             return view;
         }
 
@@ -61,6 +62,11 @@ namespace UScreens
         }
 
         protected virtual string ViewAddress => VIEWS_ADDRESS_IN_RESOURCE + typeof(TView).Name;
+
+        protected virtual void Awake()
+        {
+            EventSystemChecker.TryToFind();
+        }
 
         public override void Show()
         {
