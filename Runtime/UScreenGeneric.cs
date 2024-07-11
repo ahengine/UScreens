@@ -7,9 +7,6 @@ namespace UScreens
     {
         protected const string VIEWS_ADDRESS_IN_RESOURCE = "";
 
-        private void OnDestroy() =>
-            UScreenRepo.Remove<TState>();
-
         private TView view;
 
         protected TView View
@@ -20,6 +17,8 @@ namespace UScreens
                 return view;
             }
         }
+
+        protected virtual string ViewAddress => VIEWS_ADDRESS_IN_RESOURCE + typeof(TView).Name;
 
         public sealed override void TryCreateView()
         {
@@ -61,8 +60,6 @@ namespace UScreens
             return view;
         }
 
-        protected virtual string ViewAddress => VIEWS_ADDRESS_IN_RESOURCE + typeof(TView).Name;
-
         protected virtual void Awake()
         {
             EventSystemChecker.TryToFind();
@@ -81,5 +78,8 @@ namespace UScreens
 
         public void ChangePage() =>
             RouterBase.ChangeState(this);
+
+        private void OnDestroy() =>
+            UScreenRepo.Remove<TState>();
     }
 }
