@@ -57,6 +57,8 @@ namespace UScreens
             instance.InitializeState();
             await UniTask.Yield();
 
+            instance.Hide();
+
             Add(instance);
         }
 
