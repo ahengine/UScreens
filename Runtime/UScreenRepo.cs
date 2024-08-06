@@ -39,15 +39,15 @@ namespace UScreens
 
         #region Async
 
-        public static async UniTask<T> GetAsync<T>() where T : UScreen
+        public static async UniTask<T> GetAsync<T>(bool hideAfterCreate = true) where T : UScreen
         {
             if (!Screens.ContainsKey(typeof(T)))
-                await CreateAsync<T>();
+                await CreateAsync<T>(hideAfterCreate);
 
             return Screens[typeof(T)] as T;
         }
 
-        public static async UniTask CreateAsync<T>() where T : UScreen
+        public static async UniTask CreateAsync<T>(bool hideAfterCreate = true) where T : UScreen
         {
             var instance = new GameObject(typeof(T).Name).AddComponent<T>();
             await UniTask.Yield();
@@ -57,7 +57,8 @@ namespace UScreens
             instance.InitializeState();
             await UniTask.Yield();
 
-            instance.Hide();
+            if (hideAfterCreate)
+                instance.Hide();
 
             Add(instance);
         }
