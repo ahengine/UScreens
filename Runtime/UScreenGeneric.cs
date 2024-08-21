@@ -29,13 +29,8 @@ namespace UScreens
         {
             view = Instantiate(Resources.Load<GameObject>(ViewAddress), transform).GetComponent<TView>();
             InitializeView();
-
-            return view;
-        }
-
-        protected virtual void Awake()
-        {
             EventSystemChecker.TryToFind();
+            return view;
         }
 
         public override void Show()
