@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace UScreens
@@ -26,36 +25,10 @@ namespace UScreens
                 view = InitView();
         }
 
-        public sealed override async UniTask TryCreateViewAsync()
-        {
-            if (view == null)
-                view = await InitViewAsync();
-        }
-
         private TView InitView()
         {
             view = Instantiate(Resources.Load<GameObject>(ViewAddress), transform).GetComponent<TView>();
             InitializeView();
-
-            return view;
-        }
-
-        private async UniTask<TView> InitViewAsync()
-        {
-            view = await UniLoad.LoadAndInstantiate<TView>(ViewAddress);
-
-            view.transform.SetParent(transform);
-            await UniTask.Yield();
-
-            // Activate gameObject after reparenting
-            if (!view.gameObject.activeInHierarchy)
-            {
-                view.gameObject.SetActive(true);
-                await UniTask.Yield();
-            }
-
-            InitializeView();
-            await UniTask.Yield();
 
             return view;
         }

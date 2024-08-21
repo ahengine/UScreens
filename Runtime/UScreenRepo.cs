@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,33 +35,5 @@ namespace UScreens
 
         private static void Add<T>(T screen) where T : UScreen =>
             Screens.Add(typeof(T), screen);
-
-        #region Async
-
-        public static async UniTask<T> GetAsync<T>(bool hideAfterCreate = true) where T : UScreen
-        {
-            if (!Screens.ContainsKey(typeof(T)))
-                await CreateAsync<T>(hideAfterCreate);
-
-            return Screens[typeof(T)] as T;
-        }
-
-        public static async UniTask CreateAsync<T>(bool hideAfterCreate = true) where T : UScreen
-        {
-            var instance = new GameObject(typeof(T).Name).AddComponent<T>();
-            await UniTask.Yield();
-
-            await instance.TryCreateViewAsync();
-
-            instance.InitializeState();
-            await UniTask.Yield();
-
-            if (hideAfterCreate)
-                instance.Hide();
-
-            Add(instance);
-        }
-
-        #endregion
     }
 }

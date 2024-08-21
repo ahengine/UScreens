@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace UScreens
@@ -7,7 +6,6 @@ namespace UScreens
     {
         public bool IsShowing { protected set; get; }
         public abstract void TryCreateView();
-        public abstract UniTask TryCreateViewAsync();
         public abstract void InitializeState();
         public abstract void InitializeView();
         public abstract void Show();
