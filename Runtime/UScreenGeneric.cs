@@ -44,7 +44,7 @@ namespace UScreens
             View.gameObject.SetActive(false);
         }
 
-        public void ChangePage() =>
+        public override void ChangeScreen() =>
             RouterBase.ChangeState(this);
 
         private void OnDestroy() =>
