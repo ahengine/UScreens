@@ -23,6 +23,7 @@ namespace UScreens
         {
             if (view == null)
                 view = InitView();
+            Hide();
         }
 
         private TView InitView()
@@ -36,12 +37,12 @@ namespace UScreens
         public override void Show()
         {
             IsShowing = true;
-            View.gameObject.SetActive(true);
+            if(View) View.gameObject.SetActive(true);
         }
         public override void Hide()
         {
             IsShowing = false;
-            View.gameObject.SetActive(false);
+            if(View) View.gameObject.SetActive(false);
         }
 
         public override void ChangeScreen() =>
