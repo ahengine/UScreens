@@ -48,7 +48,7 @@ namespace UScreens
         public override void ChangeScreen() =>
             RouterBase.ChangeState(this);
 
-        private void OnDestroy() =>
+        protected override void OnDestroy() =>
             UScreenRepo.Remove<TState>();
     }
 }

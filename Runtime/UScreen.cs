@@ -8,6 +8,7 @@ namespace UScreens
         public abstract void TryCreateView();
         public abstract void InitializeState();
         public abstract void InitializeView();
+        protected abstract void OnDestroy();
         public abstract void Show();
         public abstract void Hide();
 
