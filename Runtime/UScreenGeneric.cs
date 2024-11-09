@@ -45,10 +45,13 @@ namespace UScreens
             if(View) View.gameObject.SetActive(false);
         }
 
+        private void OnDestroy() =>
+            DestoryState();
+
         public override void ChangeScreen() =>
             RouterBase.ChangeState(this);
 
-        protected override void OnDestroy() =>
+        protected override void DestoryState() =>
             UScreenRepo.Remove<TState>();
     }
 }
