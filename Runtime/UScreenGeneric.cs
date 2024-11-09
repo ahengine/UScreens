@@ -23,7 +23,7 @@ namespace UScreens
         {
             if (view == null)
                 view = InitView();
-            Hide();
+            //Hide();
         }
 
         private TView InitView()
