@@ -28,8 +28,7 @@ namespace UScreens
         public static void Create<T>() where T : UScreen
         {
             var instance = new GameObject(typeof(T).Name).AddComponent<T>();
-            instance.TryCreateView();
-            instance.InitializeState();
+            instance.Initialize();
             Add(instance);
         }
 

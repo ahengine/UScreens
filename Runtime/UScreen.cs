@@ -5,10 +5,13 @@ namespace UScreens
     public abstract class UScreen : MonoBehaviour
     {
         public bool IsShowing { protected set; get; }
-        public abstract void TryCreateView();
-        public abstract void InitializeState();
-        public abstract void InitializeView();
+        protected abstract void InitializeState();
+        protected abstract void InitializeView();
         protected abstract void DestoryState();
+        /// <summary>
+        /// Don't Call it, This is Constructor of Screen
+        /// </summary>
+        internal abstract void Initialize();
         public abstract void Show();
         public abstract void Hide();
 
